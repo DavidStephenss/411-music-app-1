@@ -4,11 +4,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+// import Box from '@material-ui/core/Box';
 import Switch from '@material-ui/core/Switch';
 import Slider from '@material-ui/core/Slider';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 
 export default function Switches() {
@@ -21,16 +19,10 @@ export default function Switches() {
   const handleChange = (event) => {
     setState({ ...state, [event.target.name]: event.target.checked });
   };
-  const valueText = (value) => {
+  const valuetext = (value) => {
   return `${value}°C`;
 }
-const SimpleSelect = () => {
-  const classes = useStyles();
-  const [age, setAge] = React.useState('');
-
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
+  
 
 const useStyles = makeStyles({
   root: {
@@ -49,10 +41,21 @@ const useStyles = makeStyles({
   },
 });
 
+
+  const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
 
   return (
     <div>
+      {/* <Box
+        component="span"
+        m={10}
+        display="flex "
+        flexWrap="wrap"
+        alignItems="center"
+        justifyContent="space-evenly"
+      >
+      </Box> */}
     <Card className={classes.root}>
       <CardContent>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
@@ -83,7 +86,7 @@ const useStyles = makeStyles({
       </Typography>
       <Slider
         defaultValue={30}
-        getAriaValueText={valueText}
+        getAriaValueText={valuetext}
         aria-labelledby="discrete-slider"
         valueLabelDisplay="auto"
         step={10}
@@ -105,22 +108,22 @@ const useStyles = makeStyles({
         <Typography variant="h5" component="h2">
         Manually control the music quality in event of poor connection
         </Typography>
-         <FormControl className={classes.formControl}>
-        <InputLabel id="demo-simple-select-label">Age</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={age}
-          onChange={handleChange}
-        >
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
-        </Select>
-      </FormControl>
-        
+        <Select></Select>
       </CardContent>
     </Card>
     </div>
   );
 }
+// const dashboard = () => {
+//   return (
+//     <div>
+//       <p>hello</p>
+//     </div>
+//     );
+// }
+ 
+// export default dashboard;
+
+
+
+
