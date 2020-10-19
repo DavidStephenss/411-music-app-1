@@ -3,7 +3,6 @@ import React from 'react';
 import {
   makeStyles,
   Card,
-  CardActions,
   CardContent,
   Typography,
   Switch,
@@ -13,8 +12,6 @@ import {
   Select,
   Box,
 } from '@material-ui/core'
-// import VolumeUpIcon from '@material-ui/icons/VolumeUp'
-// import VolumeDownIcon from '@material-ui/icons/VolumeDown'
 
 export default function Switches() {
   //switch for card number1
