@@ -1,13 +1,17 @@
 
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-// import Box from '@material-ui/core/Box';
-import Switch from '@material-ui/core/Switch';
-import Slider from '@material-ui/core/Slider';
-import Select from '@material-ui/core/Select';
+import {
+  makeStyles,
+  Card,
+  CardContent,
+  Typography,
+  Switch,
+  Slider,
+  MenuItem,
+  FormControl,
+  Select,
+  Box,
+} from '@material-ui/core'
 
 export default function Switches() {
   //switch for card number1
@@ -16,46 +20,102 @@ export default function Switches() {
     checkedB: true,
   });
 
-  const handleChange = (event) => {
+  const [value, setValue] = React.useState("");
+  const [quality, setQuality] = React.useState(2);
+  const [notification, setNotification] = React.useState({
+    switch: "",
+    slider: "",
+    select: "",
+  });
+
+const handleOnlineChange = (event) => {
     setState({ ...state, [event.target.name]: event.target.checked });
+    if (!event.target.checked) {
+      setNotification({
+        ...notification,
+        switch:
+          "Your application is offline. You won't be able to share or stream music to other devices.",
+      });
+    } else {
+      setNotification({ ...notification, switch: "" });
+    }
   };
-  const valuetext = (value) => {
-  return `${value}°C`;
-}
+
+  const handleVolChange = (event, newValue) => {
+    setValue(newValue);
+    if (newValue > 79) {
+      setNotification({
+        ...notification,
+        slider:
+          "Listening to music at a high volume could cause long-term hearing loss.",
+      });
+    } else {
+      setNotification({ ...notification, slider: "" });
+    }
+  };
+
+  const handleQualityChange = (event) => {
+    setQuality(event.target.value);
+    if (event.target.value === 1) {
+      setNotification({
+        ...notification,
+        select:
+          "Music quality is degraded. Increase quality if your connection allows it.",
+      });
+    } else {
+      setNotification({ ...notification, select: "" });
+    }
+  };
   
 
 const useStyles = makeStyles({
   root: {
-    minWidth: 275,
+    width: 275,
+    height: 200,
+    minWidth: 250,
   },
   bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)',
+    display: "inline-block",
+    margin: "0 2px",
+    transform: "scale(0.8)",
   },
   title: {
-    fontSize: 14,
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "black",
   },
   pos: {
     marginBottom: 12,
   },
+  formControl: {
+    minWidth: 260,
+  },
+  textAlign: {
+    margin: "100px 200px",
+  },
 });
-
 
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
 
   return (
     <div>
-      {/* <Box
+      <Typography
+        variant="h4"
+        style={{ marginTop: 70, marginLeft: 180 }}
+        className={classes.userText}
+      >
+        Welcome User!
+      </Typography>
+
+      <Box
         component="span"
         m={10}
         display="flex "
         flexWrap="wrap"
         alignItems="center"
-        justifyContent="space-evenly"
-      >
-      </Box> */}
+        justifyContent="space-evenly">
+
     <Card className={classes.root}>
       <CardContent>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
@@ -66,7 +126,7 @@ const useStyles = makeStyles({
         </Typography>
         <Switch
         checked={state.checkedA}
-        onChange={handleChange}
+        onChange={handleOnlineChange}
         name="checkedA"
         inputProps={{ 'aria-label': 'secondary checkbox' }}
       />
@@ -85,15 +145,15 @@ const useStyles = makeStyles({
         Temperature
       </Typography>
       <Slider
-        defaultValue={30}
-        getAriaValueText={valuetext}
-        aria-labelledby="discrete-slider"
-        valueLabelDisplay="auto"
-        step={10}
-        marks
-        min={10}
-        max={110}
-      />
+              Value={value}
+              aria-labelledby="discrete-slider"
+              valueLabelDisplay="auto"
+              onChange={handleVolChange}
+              step={10}
+              marks
+              min={0}
+              max={100}
+            />
       <Typography id="discrete-slider" gutterBottom>
         Disabled
       </Typography>
@@ -108,22 +168,28 @@ const useStyles = makeStyles({
         <Typography variant="h5" component="h2">
         Manually control the music quality in event of poor connection
         </Typography>
-        <Select></Select>
+         <FormControl className={classes.formControl}>
+              <Select value={quality} onChange={handleQualityChange}>
+                <MenuItem value={1}>Low</MenuItem>
+                <MenuItem value={2}>Normal</MenuItem>
+                <MenuItem value={3}>High</MenuItem>
+              </Select>
+            </FormControl>
       </CardContent>
     </Card>
+    </Box>
+    <Typography
+    variant="h5"
+    style={{marginTop: 40}}
+    className={classes.textAlign}
+    >
+      System Notification:
+      <br />
+      <br />
+      <Typography>{notification.switch}</Typography>
+      <Typography>{notification.slider}</Typography>
+      <Typography>{notification.select}</Typography>
+    </Typography>
     </div>
   );
 }
-// const dashboard = () => {
-//   return (
-//     <div>
-//       <p>hello</p>
-//     </div>
-//     );
-// }
- 
-// export default dashboard;
-
-
-
-
